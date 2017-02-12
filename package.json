@@ -1,0 +1,33 @@
+{
+  "name": "youtrack-node-api",
+  "version": "1.0.0",
+  "description": "Youtrack REST API Client for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "node node_modules/mocha/bin/mocha --harmony test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umidjons/youtrack-node-api.git"
+  },
+  "keywords": [
+    "youtrack"
+  ],
+  "author": "Umidjons <almatov.us@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/umidjons/youtrack-node-api/issues"
+  },
+  "homepage": "https://github.com/umidjons/youtrack-node-api#readme",
+  "dependencies": {
+    "debug": "^2.6.1",
+    "moment": "^2.17.1",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
