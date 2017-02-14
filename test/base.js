@@ -1,7 +1,11 @@
 'use strict';
 
-const expect = require('chai').expect;
+const chai = require('chai');
+const promised = require('chai-as-promised');
+chai.use(promised);
+const expect = chai.expect;
 const sinon = require('sinon');
+
 const Base = require('../src/Base');
 
 describe('Base class', function () {
@@ -87,6 +91,24 @@ describe('Base class', function () {
         expect(base.authCookie).to.equal(cookie);
 
         stubCookie.restore();
+        stub.restore();
+    });
+
+    it('Base.login() with invalid credentials should throw error', async function () {
+        let returnValue = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><error>Incorrect login or password.</error>';
+        let stub = sinon.stub(base.request, 'post').returns(returnValue);
+
+        expect(base.login()).to.be.rejectedWith(Error, 'Incorrect login or password.');
+
+        stub.restore();
+    });
+
+    it('Base.login() with unexpected response should throw error', async function () {
+        let returnValue = 'something unexpected';
+        let stub = sinon.stub(base.request, 'post').returns(returnValue);
+
+        expect(base.login()).to.be.rejectedWith(Error, 'Got unexpected response.');
+
         stub.restore();
     });
 });

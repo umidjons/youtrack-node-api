@@ -27,10 +27,20 @@ class Base {
         let response = await this.request.post(params);
         debug('login() response=', response);
 
-        this.authCookie = this.jar.getCookieString(params.url);
-        debug('login() authCookie=', this.authCookie);
+        let errorRegex = /<error>(.*)<\/error>/;
+        let errorText = null;
 
-        return response === '<login>ok</login>';
+        if (errorRegex.test(response)) {
+            errorText = response.match(errorRegex)[1];
+            debug('login() errorText=', errorText);
+            throw new Error(errorText);
+        } else if (response === '<login>ok</login>') {
+            this.authCookie = this.jar.getCookieString(params.url);
+            debug('login() authCookie=', this.authCookie);
+            return true;
+        }
+
+        throw new Error('Got unexpected response.');
     }
 
     /**
